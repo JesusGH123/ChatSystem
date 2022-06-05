@@ -29,9 +29,14 @@ namespace Chat
     class RequestGUIRow
     {
         public string username { get; }
-        public RequestGUIRow(string username)
+        public Button accept { get; }
+        public Button deny { get; }
+
+        public RequestGUIRow(string username, Button accept, Button deny)
         {
             this.username = username;
+            this.accept = accept;
+            this.deny = deny;
         }
     }
     public partial class Index : System.Web.UI.Page
@@ -83,15 +88,30 @@ namespace Chat
 
         void getAndRenderRequests()
         {
+            Console.Write("GET AND RENDER REQUESTS");
             try
             {
                 var requests = new List<User>();
                 User user = SessionInfo.getLoggedInUser(Session);
-                //requests = user.getFriendships();
+                requests = user.getFriendshipInvites();
+
+                if (requests.Count == 0)
+                    RequestLabel.Text = "No requests";
+                else
+                {
+                    RequestGrid.DataSource = requests.Select(request =>
+                    {
+                        var deny_button = new Button();
+                        var accept_button = new Button();
+                        return new RequestGUIRow(request.username, accept_button, deny_button);
+                    });
+                }
+                RequestGrid.DataBind();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                RequestLabel.Text = "Error in requests";
             }
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -103,6 +123,7 @@ namespace Chat
                     Response.Redirect("Login.aspx");
                 //username_label.Text = user.username;
                 getAndRenderMyFriendships();
+                getAndRenderRequests();
             }
         }
 

@@ -6,6 +6,11 @@
 <head runat="server">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        Gridview {
+            border: 0px;
+        }
+    </style>
 </head>
 <body>
    
@@ -69,8 +74,28 @@
 
        <div class="w-25 p-3">
           <h2>Requests</h2>
-         
-        </div> 
+           &nbsp;<asp:GridView ID="RequestGrid" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
+               <Columns>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="username" runat="server" Text='<%#Eval("username")%>' style="width: 50px;"> </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Button ID="accept_invite_button" class="button button-success" runat="server" Text="Accept" OnClick="block_click" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                   <asp:TemplateField>
+                        <ItemTemplate>
+                           <asp:Button ID="deny_invite_button" class="button button-danger" runat="server" Text="Block" OnClick="block_click" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+              </Columns>
+            </asp:GridView>
+           <asp:Label ID="RequestLabel" runat="server" Text=""></asp:Label>
+
+       </div> 
     </section>
     </form>
 
