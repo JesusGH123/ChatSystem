@@ -144,6 +144,8 @@ namespace Chat
         {
             var I = SessionInfo.getLoggedInUser(Session);
             I.sendFriendInviteTo(userSearchtxt.Text);
+            userSearchtxt.Text = "";
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Request sent successfully')", true);
         }
     }
 }

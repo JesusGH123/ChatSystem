@@ -6,6 +6,7 @@
 -- Generation Time: May 31, 2022 at 07:13 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
+USE chat
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -189,7 +190,7 @@ end$$
 
 DROP PROCEDURE IF EXISTS `send_friend_invite`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `send_friend_invite` (`my_id` VARCHAR(20), `candidate_id` VARCHAR(20))  begin
-  insert into friendship_request values (my_id, candidate_id,0)
+  insert into friendship_request values (my_id, candidate_id,0, 0)
   ;
 end$$
 

@@ -114,15 +114,15 @@ namespace Chat.Tests
         }
         [TestMethod()]
         [
-            DataRow("xXXFya","A3a4cC")
+            DataRow("xXXFya", "3aC34b")
         ]
         public void send_friend_invite_Test(string my_id, string candidate_id) //ALMOST DONE
         {
             //Precondition: DELETE all table contents
             DataBaseConnection.ExecuteNonQuery("delete from friendship_request");
+            execute_cmd_and_assert($"call send_friend_invite('{my_id}','{candidate_id}')");
             DataBaseConnection.Close();
             //TO DO: If my_id has blocked the candidate_id in friendship table don't allow the insert to friendship_request
-            execute_cmd_and_assert($"call send_friend_invite('{my_id}','{candidate_id}')");
         }
         [TestMethod()]
         [DataRow("3aC34b", "A3a4cC",true)]
