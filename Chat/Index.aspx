@@ -27,8 +27,8 @@
            
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" style="width: 300px" type="search" placeholder="Search" aria-label="Search">
-            <asp:Button class="btn btn-sucess" ID="buttonSearch" runat="server" Text="Search" />
+            <asp:TextBox class="form-control me-2" ID="userSearchtxt" style="width: 300px" runat="server"></asp:TextBox>
+            <asp:Button class="btn btn-sucess" ID="buttonSearch" runat="server" Text="Search" OnClick="buttonSearch_Click" />
           </form>
         </div>
         <asp:Button class="btn btn-warning align-items-end" ID="block_button" runat="server" Text="Logout" OnClick="btnLogout_Click" />
@@ -63,8 +63,7 @@
                    <asp:TemplateField>
                         <ItemTemplate>
                             <asp:Button ID="block_button" runat="server" Text="Block" OnClick="block_click" />
-                        </ItemTemplate>
-                       
+                        </ItemTemplate>       
                     </asp:TemplateField>
               </Columns>
             </asp:GridView>

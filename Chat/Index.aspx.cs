@@ -26,19 +26,7 @@ namespace Chat
             this.block = block;
         }
     }
-    class RequestGUIRow
-    {
-        public string username { get; }
-        public Button accept { get; }
-        public Button deny { get; }
-
-        public RequestGUIRow(string username, Button accept, Button deny)
-        {
-            this.username = username;
-            this.accept = accept;
-            this.deny = deny;
-        }
-    }
+  
     public partial class Index : System.Web.UI.Page
     {
         void getAndRenderMyFriendships()
@@ -61,9 +49,7 @@ namespace Chat
                         =>
                         {
                             var delete_button = new Button();
-                            //delete_button.Text = "Delete";
                             var block_button = new Button();
-                            //block_button.Text = "Block";
                             var messages = friendship.messages;
                             var last_message = messages.Count == 0 ? "" : messages.Last().message.content;
                             return new FriendshipGUIRow(
@@ -88,7 +74,6 @@ namespace Chat
 
         void getAndRenderRequests()
         {
-            Console.Write("GET AND RENDER REQUESTS");
             try
             {
                 var requests = new List<User>();
@@ -96,15 +81,10 @@ namespace Chat
                 requests = user.getFriendshipInvites();
 
                 if (requests.Count == 0)
-                    RequestLabel.Text = "No requests";
+                    RequestLabel.Text = "You have no requests";
                 else
                 {
-                    RequestGrid.DataSource = requests.Select(request =>
-                    {
-                        var deny_button = new Button();
-                        var accept_button = new Button();
-                        return new RequestGUIRow(request.username, accept_button, deny_button);
-                    });
+                    RequestGrid.DataSource = requests;
                 }
                 RequestGrid.DataBind();
             }
@@ -158,6 +138,12 @@ namespace Chat
         protected void MessageGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void buttonSearch_Click(object sender, EventArgs e)
+        {
+            var I = SessionInfo.getLoggedInUser(Session);
+            I.sendFriendInviteTo(userSearchtxt.Text);
         }
     }
 }
