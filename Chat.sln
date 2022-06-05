@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat", "Chat\Chat.csproj", "{5495C086-FCB5-4A5B-9907-B1D7D93CA2A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatTests", "ChatTests\ChatTests.csproj", "{9AB1009B-F285-45F9-A7EB-36DC00CFE5FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIChatTests", "UIChatTests\UIChatTests.csproj", "{14A2BAD1-6317-4D5F-A078-F36606FDF7CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5495C086-FCB5-4A5B-9907-B1D7D93CA2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5495C086-FCB5-4A5B-9907-B1D7D93CA2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5495C086-FCB5-4A5B-9907-B1D7D93CA2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5495C086-FCB5-4A5B-9907-B1D7D93CA2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB1009B-F285-45F9-A7EB-36DC00CFE5FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB1009B-F285-45F9-A7EB-36DC00CFE5FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB1009B-F285-45F9-A7EB-36DC00CFE5FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB1009B-F285-45F9-A7EB-36DC00CFE5FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14A2BAD1-6317-4D5F-A078-F36606FDF7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A2BAD1-6317-4D5F-A078-F36606FDF7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A2BAD1-6317-4D5F-A078-F36606FDF7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A2BAD1-6317-4D5F-A078-F36606FDF7CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7882EF63-C6DB-4A7C-857F-E145A493C8D4}
+	EndGlobalSection
+EndGlobal

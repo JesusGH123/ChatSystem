@@ -1,0 +1,7 @@
+.vs/
+ChatTests/obj/
+ChatTests/Debug/
+Chat/obj/
+Chat/bin/
+*.env
+*.exe
