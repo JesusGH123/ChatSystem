@@ -107,7 +107,7 @@ namespace Chat
             }
         }
 
-        protected void btnLogout_Click(object sender, EventArgs e)
+        protected void btnLogout_click(object sender, EventArgs e)
         {
             Auth.logout(Response, Session);
         }
@@ -135,17 +135,26 @@ namespace Chat
             }
         }
 
-        protected void MessageGrid_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void buttonSearch_Click(object sender, EventArgs e)
+        protected void search_click(object sender, EventArgs e)
         {
             var I = SessionInfo.getLoggedInUser(Session);
             I.sendFriendInviteTo(userSearchtxt.Text);
             userSearchtxt.Text = "";
             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Request sent successfully')", true);
+        }
+
+        protected void accept_click(object sender, EventArgs e)
+        {
+            Console.Write("Sender" + sender);
+            Console.Write("EventArgs" + e);
+        }
+
+        protected void MessageGrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = RequestGrid.SelectedRow;
+            //var I = SessionInfo.getLoggedInUser(Session);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('CHANGED INDEX!!')", true);
+            //I.acceptFriendshipInvite(row.Cells[0]);
         }
     }
 }

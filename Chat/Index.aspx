@@ -7,15 +7,25 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        Gridview {
+        table, th, td {
             border: 0px;
+            border-radius: 30px;
         }
+
+        #MessageGrid tr:nth-of-type(2n) {
+            background-color: aliceblue;
+        }
+
+        button {
+            margin: 10px;
+        }
+
     </style>
 </head>
 <body>
    
     <form id="form1" runat="server">
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
       <div class="container-fluid">
         <img style="width:30px; margin: 10px;" src="Content/chatlogo.jpeg"/>
         <a class="navbar-brand" href="#">Chutbook</a>
@@ -24,21 +34,19 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-           
           </ul>
           <form class="d-flex">
             <asp:TextBox class="form-control me-2" ID="userSearchtxt" style="width: 300px" runat="server"></asp:TextBox>
-            <asp:Button class="btn btn-sucess" ID="buttonSearch" runat="server" Text="Search" OnClick="buttonSearch_Click" />
+            <asp:Button class="btn btn-sucess" ID="buttonSearch" runat="server" Text="Search" OnClick="search_click" />
           </form>
         </div>
-        <asp:Button class="btn btn-warning align-items-end" ID="block_button" runat="server" Text="Logout" OnClick="btnLogout_Click" />
+        <asp:Button class="btn btn-warning align-items-end" ID="block_button" runat="server" Text="Logout" OnClick="btnLogout_click" />
       </div>
     </nav>
 
     <section class="d-flex">
-        <div class="w-75 p-3 ">
-
-            &nbsp;<asp:GridView ID="MessageGrid" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
+        <div class="w-75 p-3">
+            <asp:GridView ID="MessageGrid" class="w-100" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
                <Columns>
                    <asp:TemplateField>
                         <ItemTemplate>
@@ -57,12 +65,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="delete_button" runat="server" Text="Delete" OnClick="delete_click" />
+                            <asp:Button ID="delete_button" class="btn btn-light" runat="server" Text="Delete" OnClick="delete_click" />
                         </ItemTemplate>
                     </asp:TemplateField>
                    <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="block_button" runat="server" Text="Block" OnClick="block_click" />
+                            <asp:Button ID="block_button" class="btn btn-light" runat="server" Text="Block" OnClick="block_click" />
                         </ItemTemplate>       
                     </asp:TemplateField>
               </Columns>
@@ -73,7 +81,7 @@
 
        <div class="w-25 p-3">
           <h2>Requests</h2>
-           &nbsp;<asp:GridView ID="RequestGrid" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
+           <asp:GridView ID="RequestGrid" class="p-0" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
                <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
@@ -82,18 +90,17 @@
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="accept_invite_button" class="button button-success" runat="server" Text="Accept" OnClick="block_click" />
+                            <asp:Button ID="accept_invite_button" class="btn btn-success m-2" runat="server" Text="Accept" OnClick="accept_click" />
                         </ItemTemplate>
                     </asp:TemplateField>
                    <asp:TemplateField>
                         <ItemTemplate>
-                           <asp:Button ID="deny_invite_button" class="button button-danger" runat="server" Text="Block" OnClick="block_click" />
+                           <asp:Button ID="deny_invite_button" class="btn btn-danger m-2" runat="server" Text="Block" OnClick="block_click" />
                         </ItemTemplate>
                     </asp:TemplateField>
               </Columns>
             </asp:GridView>
            <asp:Label ID="RequestLabel" runat="server" Text=""></asp:Label>
-
        </div> 
     </section>
     </form>
