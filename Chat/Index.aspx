@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Chat.Index"%>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Home</title>
@@ -25,7 +24,7 @@
 <body>
    
     <form id="form1" runat="server">
-     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" >
+     <nav class="navbar navbar-expand-lg navbar-light bg-light" >
       <div class="container-fluid">
         <img style="width:30px; margin: 10px;" src="Content/chatlogo.jpeg"/>
         <a class="navbar-brand" href="#">Chutbook</a>
@@ -35,10 +34,8 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
           </ul>
-          <form class="d-flex">
             <asp:TextBox class="form-control me-2" ID="userSearchtxt" style="width: 300px" runat="server"></asp:TextBox>
             <asp:Button class="btn btn-sucess" ID="buttonSearch" runat="server" Text="Search" OnClick="search_click" />
-          </form>
         </div>
         <asp:Button class="btn btn-warning align-items-end" ID="block_button" runat="server" Text="Logout" OnClick="btnLogout_click" />
       </div>
@@ -46,7 +43,7 @@
 
     <section class="d-flex">
         <div class="w-75 p-3">
-            <asp:GridView ID="MessageGrid" class="w-100" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
+            <asp:GridView ID="MessageGrid" class="w-100" runat="server" AutoGenerateColumns="False">
                <Columns>
                    <asp:TemplateField>
                         <ItemTemplate>
@@ -81,27 +78,25 @@
 
        <div class="w-25 p-3">
           <h2>Requests</h2>
-           <asp:GridView ID="RequestGrid" class="p-0" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="MessageGrid_SelectedIndexChanged">
+           <asp:GridView ID="RequestGrid" class="p-0" runat="server" AutoGenerateColumns="False" OnRowCommand="RequestGrid_RowCommand">
                <Columns>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:Label ID="username" runat="server" Text='<%#Eval("username")%>' style="width: 50px;"> </asp:Label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:Button ID="accept_invite_button" class="btn btn-success m-2" runat="server" Text="Accept" OnClick="accept_click" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
                    <asp:TemplateField>
                         <ItemTemplate>
-                           <asp:Button ID="deny_invite_button" class="btn btn-danger m-2" runat="server" Text="Block" OnClick="block_click" />
+                            <asp:Label ID="id" runat="server" Text='<%#Eval("id") %>' style="display: none;"> </asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="request_user" runat="server" Text='<%#Eval("username")%>' style="width: 50px;"> </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-success m-2" CommandName="Accept" Text="Accept" />
+                    <asp:ButtonField ButtonType="Button" ControlStyle-CssClass="btn btn-danger m-2" CommandName="Block" Text="Block" />
               </Columns>
             </asp:GridView>
+
            <asp:Label ID="RequestLabel" runat="server" Text=""></asp:Label>
-       </div> 
+       </div>
     </section>
     </form>
 

@@ -14,16 +14,12 @@ namespace Chat
         public string id { get; }
         public string username { get; }
         public string last_message_preview { get; }
-        public Button delete { get; }
-        public Button block { get; }
 
-        public FriendshipGUIRow(string id, string username, string last_message_preview, Button delete, Button block)
+        public FriendshipGUIRow(string id, string username, string last_message_preview)
         {
             this.id = id;
             this.username = username;
             this.last_message_preview = last_message_preview;
-            this.delete = delete;
-            this.block = block;
         }
     }
   
@@ -56,8 +52,6 @@ namespace Chat
                                 friendship.friend_id
                                 , UserController.searchUsers(friendship.friend_id, "")[0].username
                                 , last_message.Substring(0, Math.Min(30, last_message.Length))
-                                , delete_button
-                                , block_button
                              );
                         }
                     );
@@ -137,24 +131,47 @@ namespace Chat
 
         protected void search_click(object sender, EventArgs e)
         {
+            //Check if the friend is already added
             var I = SessionInfo.getLoggedInUser(Session);
-            I.sendFriendInviteTo(userSearchtxt.Text);
-            userSearchtxt.Text = "";
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Request sent successfully')", true);
+
+            if (System.Convert.ToBoolean(I.sendFriendInviteTo(userSearchtxt.Text)))
+            {
+                userSearchtxt.Text = "";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Request sent successfully')", true);
+            }
+            else
+            {
+                userSearchtxt.Text = "";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('User is already your friend')", true);
+            }
         }
 
-        protected void accept_click(object sender, EventArgs e)
+        protected void RequestGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Console.Write("Sender" + sender);
-            Console.Write("EventArgs" + e);
+            var I = SessionInfo.getLoggedInUser(Session);
+            int index = Convert.ToInt32(e.CommandArgument);
+            GridViewRow grid_view_row = RequestGrid.Rows[index];
+
+            string friend_id;
+            //Check if the friend is already added
+            if (grid_view_row.RowType == DataControlRowType.DataRow)
+            {
+                friend_id = ((Label)grid_view_row.FindControl("id")).Text;
+                var friend = new User(friend_id, "");
+
+                switch (e.CommandName)
+                {
+                    case "Accept":
+                        I.acceptFriendshipInvite(friend);
+                        break;
+                    case "Block":
+                        I.blockFriendshipInvite(friend);
+                        break;
+                }   
+            }
+
+            Response.Redirect("https://localhost:44313/Index");
         }
 
-        protected void MessageGrid_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow row = RequestGrid.SelectedRow;
-            //var I = SessionInfo.getLoggedInUser(Session);
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('CHANGED INDEX!!')", true);
-            //I.acceptFriendshipInvite(row.Cells[0]);
-        }
     }
 }
