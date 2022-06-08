@@ -39,38 +39,15 @@
         <input class="btn btn-primary" type="submit" value="&#8592">
         <h1 style="text-align:center;color:green;"> Friend </h1> 
         <div class="container border w-100 m-2"> 
-            <div class="container"> 
-                <div class="row"> 
-                    <div class="card-body border m-3">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">2021-03-01 3:45</h6>
-                        <input class="btn btn-primary" type="submit" value="Edit">
-                        <input class="btn btn-primary" type="submit" value="Delete">
-                    </div>
-                    <div class="card-body border m-3">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">2021-03-01 3:45</h6>
-                        <input class="btn btn-primary" type="submit" value="Edit">
-                        <input class="btn btn-primary" type="submit" value="Delete">
-                    </div>
-                    <div class="card-body border m-3">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">2021-03-01 3:45</h6>
-                        <input class="btn btn-primary" type="submit" value="Edit">
-                        <input class="btn btn-primary" type="submit" value="Delete">
-                    </div>
-                    <div class="card-body border m-3">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <h6 class="card-subtitle mb-2 text-muted">2021-03-01 3:45</h6>
-                        <input class="btn btn-primary" type="submit" value="Edit">
-                        <input class="btn btn-primary" type="submit" value="Delete">
-                    </div>
-                </div> 
-            </div> 
+            <asp:GridView ID="RequestGrid" class="p-0" runat="server" AutoGenerateColumns="False">
+               <Columns>
+                   <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="id" runat="server" Text='<%#Eval("message") %>' style="display: none;"> </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+              </Columns>
+            </asp:GridView>
         </div>
 
         <div class="input-group">

@@ -11,7 +11,15 @@ namespace Chat
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var user = SessionInfo.getLoggedInUser(Session);
+            if (user == null)
+                Response.Redirect("Login.aspx");
+            //getAndRenderMessages();
+            string friendId = Request.QueryString["friend"];
+            if ( friendId != null)
+            {
+                //Need one friendship
+            }
         }
     }
 }

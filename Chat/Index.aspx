@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Chat.Index"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Chat.Index" EnableEventValidation="false"%>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,9 +15,10 @@
             background-color: aliceblue;
         }
 
-        button {
-            margin: 10px;
+        #MessageGrid tr:hover {
+            cursor: pointer;
         }
+
 
     </style>
 </head>
@@ -43,7 +44,7 @@
 
     <section class="d-flex">
         <div class="w-75 p-3">
-            <asp:GridView ID="MessageGrid" class="w-100" runat="server" AutoGenerateColumns="False">
+            <asp:GridView ID="MessageGrid" class="w-100" runat="server" AutoGenerateColumns="False" OnRowDataBound="OnRowDataBound" OnSelectIndexChanged="OnSelectIndexChanged" OnSelectedIndexChanged="OnSelectIndexChanged">
                <Columns>
                    <asp:TemplateField>
                         <ItemTemplate>

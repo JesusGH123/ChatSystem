@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Data;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -170,8 +172,39 @@ namespace Chat
                 }   
             }
 
-            Response.Redirect("https://localhost:44313/Index");
+            Response.Redirect("Index.aspx");
         }
 
+        protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onClick"] = Page.ClientScript.GetPostBackClientHyperlink(MessageGrid, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click to chat";
+            }
+        }
+
+        protected void OnSelectIndexChanged(object sender, EventArgs e)
+        {
+             var I = SessionInfo.getLoggedInUser(Session);
+
+
+            foreach (GridViewRow row in MessageGrid.Rows)
+            {
+                if (row.RowIndex == MessageGrid.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    row.ToolTip = string.Empty;
+                    GridViewRow grid_view_row = RequestGrid.Rows[row.RowIndex];
+                    string friend_id = ((Label)grid_view_row.FindControl("id")).Text;
+                    Response.Redirect("Chat.aspx?friend=" + friend_id);
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click to select this row.";
+                }
+            }
+        }
     }
 }
