@@ -136,7 +136,7 @@ namespace Chat
             //Check if the friend is already added
             var I = SessionInfo.getLoggedInUser(Session);
 
-            if (System.Convert.ToBoolean(I.sendFriendInviteTo(userSearchtxt.Text)))
+            if (I.sendFriendInviteTo(userSearchtxt.Text))
             {
                 userSearchtxt.Text = "";
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Request sent successfully')", true);
@@ -186,25 +186,12 @@ namespace Chat
 
         protected void OnSelectIndexChanged(object sender, EventArgs e)
         {
-             var I = SessionInfo.getLoggedInUser(Session);
+            var I = SessionInfo.getLoggedInUser(Session);
+            GridViewRow grid_view_row = MessageGrid.Rows[MessageGrid.SelectedIndex];
+            Session["friend_id"] = ((Label)grid_view_row.FindControl("id")).Text;
+            Session["username"] = ((Label)grid_view_row.FindControl("username")).Text;
+            Response.Redirect("Chat.aspx");
 
-
-            foreach (GridViewRow row in MessageGrid.Rows)
-            {
-                if (row.RowIndex == MessageGrid.SelectedIndex)
-                {
-                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
-                    row.ToolTip = string.Empty;
-                    GridViewRow grid_view_row = RequestGrid.Rows[row.RowIndex];
-                    string friend_id = ((Label)grid_view_row.FindControl("id")).Text;
-                    Response.Redirect("Chat.aspx?friend=" + friend_id);
-                }
-                else
-                {
-                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
-                    row.ToolTip = "Click to select this row.";
-                }
-            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Chat
     public class Message
     {
         public string content { get; set; }
-        MySqlDateTime date_time {  get; }
+        public MySqlDateTime date_time {  get; }
 
         public Message(string content, MySqlDateTime date_time)
         {

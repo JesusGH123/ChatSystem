@@ -28,7 +28,7 @@ namespace Chat
             {
                 var friend_id = reader.GetString(0);
                 //handle if not already in the dictionary
-                if(!friends_messages.ContainsKey(friend_id))
+                if (!friends_messages.ContainsKey(friend_id))
                     friends_messages[friend_id] = new List<(Message message, Friendship.Source source)>();
                 try
                 {
@@ -90,7 +90,7 @@ namespace Chat
         {
             var reader = DataBaseConnection.ExecuteReader($"call get_received_friendship_invites('{id}')");
             var users = new List<User>();
-            while(reader.Read())
+            while (reader.Read())
             {
                 users.Add(
                     new User(
@@ -113,7 +113,7 @@ namespace Chat
             cmd.CommandText =
                 $"call does_this_friendship_invite_exist_and_not_blocked(" +
                      parameters
-                +$")"
+                + $")"
             ;
             if (
                 !Convert.ToBoolean(
@@ -125,17 +125,17 @@ namespace Chat
             cmd.CommandText =
                 $"call create_friendship(" +
                     parameters
-                +$")"
+                + $")"
             ;
             if (cmd.ExecuteNonQuery() < 1)
                 return false;
             //3
             cmd.CommandText =
-                $"call delete_friendship_invite("+
+                $"call delete_friendship_invite(" +
                     parameters
-                +$")"
+                + $")"
             ;
-            if(cmd.ExecuteNonQuery() < 1)
+            if (cmd.ExecuteNonQuery() < 1)
                 return false;
             DataBaseConnection.Commit();
             DataBaseConnection.Close();
@@ -150,9 +150,37 @@ namespace Chat
             var result = DataBaseConnection.ExecuteNonQuery(
                 $"block_friend_ship_invite(" +
                     parameters
-                +$")");
+                + $")");
             DataBaseConnection.Close();
             return result > 0;
+        }
+        public List<(Message message, Friendship.Source source)> getFriendShipMessages(string user_id)
+        {
+
+            var messages = new List<(Message message, Friendship.Source source)>();
+            var reader = DataBaseConnection.ExecuteReader($"call get_friendship_messages('{id}','{user_id}')");
+            //query returns the following:
+            //source [0]
+            //text [1]
+            //timestamp [2]
+            while (reader.Read())
+            {
+                var friend_id = reader.GetString(0);
+                //handle if not already in the dictionary
+                {
+                    messages.Add(
+                        (
+                            new Message(
+                                reader.GetString(1)
+                                , reader.GetMySqlDateTime(2)
+                            )
+                            , (Friendship.Source)reader.GetUInt16(0)
+                        )
+                    );
+                }
+            }
+            DataBaseConnection.Close();
+            return messages;
         }
     }
 }

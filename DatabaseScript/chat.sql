@@ -3,10 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 31, 2022 at 07:13 AM
+-- Generation Time: Jun 08, 2022 at 04:26 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
-USE chat
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -143,6 +142,39 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_friendships_messages` (IN `user
     ;
 end$$
 
+DROP PROCEDURE IF EXISTS `get_friendship_messages`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_friendship_messages` (IN `user_id_` VARCHAR(20), IN `friend_id_` VARCHAR(20))  begin
+  select 
+    `source`
+    ,text
+    ,timestamp
+	from
+  (
+    select 
+      if(user_a = user_id_,user_b,user_a) friend_id 
+    from friendship 
+    where 
+      (user_a = user_id_ or user_b = user_id_)
+      and (user_a = friend_id_ or user_b = friend_id_)
+      and is_blocked = 0
+  ) a left join (
+    select 
+      if(origin_user = user_id_,destination_user,origin_user) friend_id
+      ,if(origin_user = user_id_,0,1) `source`  
+      ,text
+      ,timestamp
+    from message 
+    where
+      (origin_user = user_id_ or destination_user = user_id_)
+      and
+      not if(origin_user = user_id_,is_for_origin_deleted,is_for_destination_deleted) 
+    order by
+      timestamp
+  ) b
+  on a.friend_id = b.friend_id
+    ;
+end$$
+
 DROP PROCEDURE IF EXISTS `get_received_friendship_invites`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_received_friendship_invites` (`id_` VARCHAR(20))  begin
   select 
@@ -189,8 +221,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `search_user_by_id_or_username` (`id
 end$$
 
 DROP PROCEDURE IF EXISTS `send_friend_invite`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `send_friend_invite` (`my_id` VARCHAR(20), `candidate_id` VARCHAR(20))  begin
-  insert into friendship_request values (my_id, candidate_id,0, 0)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `send_friend_invite` (IN `my_id` VARCHAR(20), IN `candidate_id` VARCHAR(20))  begin
+  insert into friendship_request values (my_id, candidate_id,0,0)
   ;
 end$$
 

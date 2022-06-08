@@ -31,19 +31,31 @@
         .col-sm-8:nth-child(2n+2) { 
             background: black; 
         } 
-  
+
+
     </style> 
 </head>
 <body>
     <form id="form1" runat="server">
-        <input class="btn btn-primary" type="submit" value="&#8592">
-        <h1 style="text-align:center;color:green;"> Friend </h1> 
-        <div class="container border w-100 m-2"> 
-            <asp:GridView ID="RequestGrid" class="p-0" runat="server" AutoGenerateColumns="False">
-               <Columns>
+        <asp:Button ID="btnBack" class="btn btn-primary" runat="server" Text="←" OnClick="btnBack_Click"/>
+        &nbsp;
+        <asp:Label ID="FriendName" style="text-align:center;color:green;" runat="server" Text="Friend"></asp:Label>
+        <div class="container w-100 m-2"> 
+            <asp:GridView ID="MessageGrid" BorderWidth="0px" runat="server">
+                 <Columns>
                    <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Label ID="id" runat="server" Text='<%#Eval("message") %>' style="display: none;"> </asp:Label>
+                            <asp:Label ID="message" runat="server" Text='<%#Eval("content") %>' style="display: none;"> </asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                     <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Button ID="ButtonSend" class="btn btn-danger" runat="server" Text="X"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="datetime" runat="server" Text='<%#Eval("date_time").ToString() %>' style="color: gray"> </asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
               </Columns>
@@ -51,8 +63,9 @@
         </div>
 
         <div class="input-group">
-            <textarea class="form-control" aria-label="With textarea"></textarea>
-            <input class="btn btn-primary" type="submit" value="Send">
+            <asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>
+            <asp:Button ID="ButtonSend" class="btn btn-primary" runat="server" Text="Send" OnClick="ButtonSend_Click"/>
+
         </div>
     </form>
 </body>
